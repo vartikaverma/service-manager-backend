@@ -23,8 +23,8 @@ The backend exposes a REST API for full CRUD operations and supports advanced qu
 
 ### 1. Clone the repository
 ```
-git clone <your-repo-url>
-cd webapp
+git clone https://github.com/vartikaverma/service-manager-backend.git
+cd service-manager-backend
 ```
 
 ### 2. Configure MongoDB
