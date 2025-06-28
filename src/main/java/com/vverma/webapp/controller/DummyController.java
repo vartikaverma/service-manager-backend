@@ -2,17 +2,19 @@ package com.vverma.webapp.controller;
 
 import com.vverma.webapp.model.Dummy;
 import org.springframework.web.bind.annotation.*;
-import java.util.concurrent.ConcurrentHashMap;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 @RestController
 @RequestMapping("/dummy")
+@CrossOrigin(origins = "http://localhost:4200")
 // This is a REST controller for managing Dummy objects in the web application.
 public class DummyController {
 
-    // using ConcurrentHashMap to simulate a cache for Dummy objects
-    // ConcurrentHashMap is thread-safe and allows concurrent access that ensures that multiple threads can read and write to the cache without corrupting the data.
-    // This is useful in a web application where multiple requests can be handled simultaneously.
-    private final ConcurrentHashMap<String, Dummy> cache = new ConcurrentHashMap<>();
+    // Using Caffeine cache for Dummy objects
+    private final Cache<String, Dummy> cache = Caffeine.newBuilder()
+            .maximumSize(100)
+            .build();
 
     @PostMapping
     public Dummy createDummy(@RequestBody Dummy dummy) {
@@ -29,6 +31,6 @@ public class DummyController {
 
     @GetMapping("/{id}")
     public Dummy getDummy(@PathVariable String id) {
-        return cache.get(id);
+        return cache.getIfPresent(id);
     }
 }

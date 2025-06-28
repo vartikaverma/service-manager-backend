@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/services")
+@CrossOrigin(origins = "http://localhost:4200")
 // This is a REST controller for managing services in the web application.
 public class ServiceController {
     @Autowired
